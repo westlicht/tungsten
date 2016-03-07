@@ -29,6 +29,19 @@ int main(int argc, char *argv[])
         openvdb::initialize();
 #endif
 
+    // Use OpenGL 3.2 core-profile
+    // Note: This is due to a limitation in MacOSX, where the default format
+    // needs to be set before creating an instance of QOpenGLWidget.
+    QSurfaceFormat surfaceFormat;
+    surfaceFormat.setMajorVersion(3);
+    surfaceFormat.setMinorVersion(2);
+    surfaceFormat.setProfile(QSurfaceFormat::CoreProfile);
+    surfaceFormat.setAlphaBufferSize(8);
+    surfaceFormat.setDepthBufferSize(24);
+    surfaceFormat.setSamples(4);
+    surfaceFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
+    QSurfaceFormat::setDefaultFormat(surfaceFormat);
+
     QApplication app(argc, argv);
 
     QDir::setCurrent(QString::fromStdString(FileUtils::getExecutablePath().parent().nativeSeparators().asString()));
