@@ -74,7 +74,12 @@ PreviewWindow::PreviewWindow(QWidget *proxyParent, MainWindow *parent)
     new QShortcut(QKeySequence("Ctrl+D"), this, SLOT(duplicateSelection()));
     new QShortcut(QKeySequence("Ctrl+A"), this, SLOT(addModel()));
     new QShortcut(QKeySequence("Delete"), this, SLOT(deleteSelection()));
+#ifdef __APPLE__
+    // Cmd-Tab on OSX is reserved to switch applications
+    new QShortcut(QKeySequence("Alt+Tab"), this, SLOT(togglePreview()));
+#else
     new QShortcut(QKeySequence("Ctrl+Tab"), this, SLOT(togglePreview()));
+#endif
 
     QShortcut *tShortcut = new QShortcut(QKeySequence("W"), this);
     QShortcut *rShortcut = new QShortcut(QKeySequence("E"), this);

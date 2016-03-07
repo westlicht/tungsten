@@ -31,7 +31,12 @@ RenderWindow::RenderWindow(QWidget *proxyParent, MainWindow *parent)
     new QShortcut(QKeySequence("F5"), this, SLOT(refresh()));
     new QShortcut(QKeySequence("R"), this, SLOT(toggleAutoRefresh()));
     new QShortcut(QKeySequence("Home"), this, SLOT(resetView()));
+#ifdef __APPLE__
+    // Cmd-Tab on OSX is reserved to switch applications
+    new QShortcut(QKeySequence("Alt+Tab"), this, SLOT(togglePreview()));
+#else
     new QShortcut(QKeySequence("Ctrl+Tab"), this, SLOT(togglePreview()));
+#endif
 
     _sppLabel = new QLabel(this);
     _statusLabel = new QLabel(this);
